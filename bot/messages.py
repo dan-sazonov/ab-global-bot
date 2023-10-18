@@ -5,3 +5,5 @@ START = f"{hbold('Hello!')}"
 HELP = "Sample of /help message"
 
 STOP = "Sample of /stop message"
+
+UNKNOWN = "Unknown command, type /help"
