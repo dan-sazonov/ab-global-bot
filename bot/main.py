@@ -26,6 +26,11 @@ async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
 
 
+@dp.message(Command("stop"))
+async def command_stop_handler(message: Message) -> None:
+    await message.answer(messages.STOP)
+
+
 async def main() -> None:
     bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
     await dp.start_polling(bot)
