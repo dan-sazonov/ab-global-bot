@@ -4,7 +4,7 @@ import sys
 
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart
+from aiogram.filters import Command
 from aiogram.types import Message
 
 import config
@@ -13,12 +13,17 @@ import messages
 dp = Dispatcher()
 
 
-@dp.message(CommandStart())
+@dp.message(Command("start"))
 async def command_start_handler(message: Message) -> None:
     """
     This handler receives messages with `/start` command
     """
     await message.answer(messages.START)
+
+
+@dp.message(Command("help"))
+async def command_help_handler(message: Message) -> None:
+    await message.answer(messages.HELP)
 
 
 async def main() -> None:
