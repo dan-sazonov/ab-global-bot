@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 aiogram = "^3.1.1"
+python-dotenv = "^1.0.0"
 
 
 [build-system]

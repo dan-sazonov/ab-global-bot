@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import sys
-from os import getenv
 
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
@@ -9,8 +8,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 
+import config
 
-TOKEN = getenv("BOT_TOKEN")
 dp = Dispatcher()
 
 
@@ -36,7 +35,7 @@ async def echo_handler(message: types.Message) -> None:
 
 
 async def main() -> None:
-    bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
+    bot = Bot(config.BOT_TOKEN, parse_mode=ParseMode.HTML)
     await dp.start_polling(bot)
 
 
