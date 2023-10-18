@@ -11,6 +11,19 @@ import config
 import messages
 
 dp = Dispatcher()
+bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
+
+
+@dp.startup()
+async def on_startup():
+    # await config.set_commands(dp)
+    await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_START)
+
+
+@dp.shutdown()
+async def on_shutdown():
+    await bot.close()
+    await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_STOP)
 
 
 @dp.message(Command("start"))
@@ -37,7 +50,6 @@ async def unknown_command_handler(message: Message) -> None:
 
 
 async def main() -> None:
-    bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
     await dp.start_polling(bot)
 
 
