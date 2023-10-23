@@ -1,6 +1,7 @@
 from peewee import Model, PrimaryKeyField, BigIntegerField, DateTimeField, IntegerField, CharField, SqliteDatabase
+import config
 
-db = SqliteDatabase('../data.db')
+db = SqliteDatabase(config.DB_FILE)
 
 
 class BaseModel(Model):

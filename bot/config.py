@@ -17,3 +17,5 @@ def _get_settings():
 
 
 settings = _get_settings()
+
+DB_FILE = '../data.db'
