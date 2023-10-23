@@ -1,8 +1,10 @@
 from models import models_list, db, Word, prev_state
+import services
 
 
 def _add_words() -> None:
-    pass
+    with db:
+        Word.insert_many(services.get_words_objects()).execute()
 
 
 def create_tables():
