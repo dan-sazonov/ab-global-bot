@@ -1,6 +1,9 @@
+import os
+
 from peewee import Model, PrimaryKeyField, BigIntegerField, DateTimeField, IntegerField, CharField, SqliteDatabase
 import config
 
+prev_state = os.path.isfile(config.DB_FILE)
 db = SqliteDatabase(config.DB_FILE)
 
 
@@ -23,7 +26,7 @@ class User(BaseModel):
 
 class Word(BaseModel):
     id = PrimaryKeyField(unique=True)
-    word = CharField()
+    word = CharField(max_length=100)
     show_num = IntegerField()
     vote_num = IntegerField()
 

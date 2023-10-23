@@ -1,11 +1,4 @@
-import os
-
-from models import models_list, db
-import config
-
-
-def _has_db() -> bool:
-    return os.path.isfile(config.DB_FILE)
+from models import models_list, db, Word, prev_state
 
 
 def _add_words() -> None:
@@ -13,10 +6,10 @@ def _add_words() -> None:
 
 
 def create_tables():
-    db_prev_state = _has_db()
+    has_db = prev_state
 
     with db:
         db.create_tables(models_list)
 
-    if not db_prev_state:
+    if not has_db:
         _add_words()
