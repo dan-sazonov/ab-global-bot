@@ -39,3 +39,16 @@ def update_user(usr_id: int, usr_date: datetime = None):
 
     with db:
         usr.save()
+
+
+def update_words(voted_word_id: int, linked_word_id: int):
+    voted_word = Word.get(Word.id == voted_word_id)
+    voted_word.show_num += 1
+    voted_word.vote_num += 1
+
+    linked_word = Word.get(Word.id == linked_word_id)
+    linked_word.show_num += 1
+
+    with db:
+        voted_word.save()
+        linked_word.save()
