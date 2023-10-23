@@ -35,7 +35,7 @@ def add_user(usr_id: int, usr_date: datetime = None):
 def update_user(usr_id: int, usr_date: datetime = None):
     usr = User.get(User.tg_id == usr_id)
     usr.date_act = usr_date if usr_date else datetime.now()
-    usr.resp_num = usr.resp_num + 1
+    usr.resp_num += 1
 
     with db:
         usr.save()
