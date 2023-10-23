@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from peewee import fn
+
 from models import models_list, db, Word, User, prev_state
 import services
 
@@ -65,3 +67,8 @@ def get_words(words_ids: tuple[int, int]) -> tuple[str]:
         out.append(str(Word.get(Word.id == i).word))
 
     return tuple(out)
+
+
+def get_max_word_id() -> int:
+    max_id = Word.select(fn.MAX(Word.id)).scalar()
+    return max_id
