@@ -16,7 +16,7 @@ class User(BaseModel):
     id = PrimaryKeyField(unique=True)
     tg_id = BigIntegerField(unique=True)
     date_reg = DateTimeField()
-    date_act = DateTimeField()
+    date_act = DateTimeField(null=True)
     resp_num = IntegerField()
 
     class Meta:
