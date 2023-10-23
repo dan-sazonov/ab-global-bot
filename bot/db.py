@@ -19,7 +19,9 @@ def create_tables():
         _add_words()
 
 
-def add_user(usr_id: int, usr_date: datetime):
+def add_user(usr_id: int, usr_date: datetime = None):
+    usr_date = usr_date if usr_date else datetime.now()
+
     usr_obj = User(
         tg_id=usr_id,
         date_reg=usr_date,
