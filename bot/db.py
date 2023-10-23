@@ -1,8 +1,11 @@
+import os
+
 from models import models_list, db
+import config
 
 
 def _has_db() -> bool:
-    pass
+    return os.path.isfile(config.DB_FILE)
 
 
 def _add_words() -> None:
