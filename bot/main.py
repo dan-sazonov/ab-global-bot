@@ -39,11 +39,6 @@ async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
 
 
-@dp.message(Command("stop"))
-async def command_stop_handler(message: Message) -> None:
-    await message.answer(messages.STOP)
-
-
 @dp.message()
 async def unknown_command_handler(message: Message) -> None:
     await message.answer(messages.UNKNOWN)
