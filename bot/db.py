@@ -1,4 +1,6 @@
-from models import models_list, db, Word, prev_state
+from datetime import datetime
+
+from models import models_list, db, Word, User, prev_state
 import services
 
 
@@ -15,3 +17,14 @@ def create_tables():
 
     if not has_db:
         _add_words()
+
+
+def add_user(usr_id: int, usr_date: datetime):
+    usr_obj = User(
+        tg_id=usr_id,
+        date_reg=usr_date,
+        resp_num=0
+    )
+
+    with db:
+        usr_obj.save()
