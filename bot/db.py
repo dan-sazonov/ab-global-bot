@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Tuple, Any
 
 from models import models_list, db, Word, User, prev_state
 import services
@@ -42,20 +41,27 @@ def update_user(usr_id: int, usr_date: datetime = None):
         usr.save()
 
 
-def update_words(voted_word_id: int, linked_word_id: int):
-    voted_word = Word.get(Word.id == voted_word_id)
-    voted_word.show_num += 1
-    voted_word.vote_num += 1
+def _update_show_num(word_id: int) -> None:
+    word = Word.get(Word.id == word_id)
+    word.show_num += 1
 
-    linked_word = Word.get(Word.id == linked_word_id)
-    linked_word.show_num += 1
+    with db:
+        word.save()
+
+
+def update_voted_word(voted_word_id: int):
+    voted_word = Word.get(Word.id == voted_word_id)
+    voted_word.vote_num += 1
 
     with db:
         voted_word.save()
-        linked_word.save()
 
 
 def get_words(words_ids: tuple[int, int]) -> tuple[str]:
-    out = tuple(str(Word.get(Word.id == i).word) for i in words_ids)
+    out = []
 
-    return out
+    for i in words_ids:
+        _update_show_num(i)
+        out.append(str(Word.get(Word.id == i).word))
+
+    return tuple(out)
