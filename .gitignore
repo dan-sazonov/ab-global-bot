@@ -161,4 +161,4 @@ cython_debug/
 .idea/
 
 # database source files
-bot/*.db
+*.db
