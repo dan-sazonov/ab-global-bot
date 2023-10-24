@@ -9,6 +9,7 @@ from aiogram.types import Message
 
 import config
 import messages
+import db
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -16,7 +17,7 @@ bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
 
 @dp.startup()
 async def on_startup():
-    # await config.set_commands(dp)
+    db.create_tables()
     await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_START)
 
 
@@ -31,6 +32,7 @@ async def command_start_handler(message: Message) -> None:
     """
     This handler receives messages with `/start` command
     """
+    db.add_user(message.from_user.id, message.date)
     await message.answer(messages.START)
 
 
