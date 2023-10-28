@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
+from aiogram import F
 
 import config
 import messages
@@ -42,7 +43,7 @@ async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
 
 
-@dp.message(Command("test"))
+@dp.message((F.from_user.id == config.settings.admin_id) & (F.text == "test"))
 async def command_help_handler(message: Message) -> None:
     ids = services.get_words_ids()
     out = db.get_words(ids)
