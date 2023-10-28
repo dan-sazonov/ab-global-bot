@@ -30,8 +30,10 @@ def add_user(usr_id: int, usr_date: datetime = None):
         resp_num=0
     )
 
+    query = User.select().where(User.tg_id == usr_id)
     with db:
-        usr_obj.save()
+        if not query.exists():
+            usr_obj.save()
 
 
 def update_user(usr_id: int, usr_date: datetime = None):
