@@ -1,4 +1,7 @@
 import os.path
+from peewee import fn
+
+from models import Word
 
 
 def _check_data_file(path: str):
@@ -37,3 +40,8 @@ def get_words_objects() -> list[dict]:
         })
 
     return words
+
+
+def get_max_word_id() -> int:
+    max_id = Word.select(fn.MAX(Word.id)).scalar()
+    return max_id
