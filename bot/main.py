@@ -10,6 +10,7 @@ from aiogram.types import Message
 import config
 import messages
 import db
+from bot import services
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -39,6 +40,14 @@ async def command_start_handler(message: Message) -> None:
 @dp.message(Command("help"))
 async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
+
+
+@dp.message(Command("test"))
+async def command_help_handler(message: Message) -> None:
+    ids = services.get_words_ids()
+    out = db.get_words(ids)
+    db.update_user(message.from_user.id, message.date)
+    await message.answer(f'{out[0]}, {out[1]}')
 
 
 @dp.message()
