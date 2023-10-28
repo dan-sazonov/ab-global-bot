@@ -1,4 +1,6 @@
 import os.path
+import random
+
 from peewee import fn
 
 from models import Word
@@ -42,6 +44,12 @@ def get_words_objects() -> list[dict]:
     return words
 
 
-def get_max_word_id() -> int:
+def get_words_ids() -> tuple[int, int]:
     max_id = Word.select(fn.MAX(Word.id)).scalar()
-    return max_id
+    id_1 = id_2 = random.randint(1, max_id)
+
+    while id_1 == id_2:
+        id_2 = random.randint(1, max_id)
+
+    return id_1, id_2
+
