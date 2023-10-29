@@ -39,18 +39,6 @@ async def on_shutdown():
     await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_STOP)
 
 
-@dp.message(Command("start"))
-async def command_start_handler(message: Message) -> None:
-    """
-    This handler receives messages with `/start` command
-    """
-    db.add_user(message.from_user.id, message.date)
-    await message.answer(messages.START)
-
-    ans = _new_pair(message)
-    await message.answer(ans, reply_markup=keyboard_voting)
-
-
 @dp.message((F.text == "1") | (F.text == "2"))
 async def polling_handler(message: Message) -> None:
     ans = _new_pair(message)
@@ -62,6 +50,17 @@ async def polling_handler(message: Message) -> None:
 #   todo сбрасываем фсм
 #   todo показываем новое сообщение
 #   todo сохраняем в фсм их айдишники
+
+@dp.message(Command("start"))
+async def command_start_handler(message: Message) -> None:
+    """
+    This handler receives messages with `/start` command
+    """
+    db.add_user(message.from_user.id, message.date)
+    await message.answer(messages.START)
+
+    await polling_handler(message)
+
 
 @dp.message(Command("help"))
 async def command_help_handler(message: Message) -> None:
