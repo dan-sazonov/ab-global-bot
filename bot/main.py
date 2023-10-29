@@ -15,7 +15,7 @@ import config
 import messages
 import db
 from bot import services
-from keyboards import keyboard_voting
+from keyboards import keyboard_voting, keyboard_start
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -44,7 +44,7 @@ async def on_shutdown():
     await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_STOP)
 
 
-@dp.message((F.text == "1") | (F.text == "2"))
+@dp.message((F.text == "1") | (F.text == "2") | (F.text == "Поехали!"))
 async def polling_handler(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
     # todo парсить, определить за кого голос и увеличить
@@ -61,9 +61,7 @@ async def command_start_handler(message: Message) -> None:
     This handler receives messages with `/start` command
     """
     db.add_user(message.from_user.id, message.date)
-    await message.answer(messages.START)
-
-    await polling_handler(message)
+    await message.answer(messages.START, reply_markup=keyboard_start)
 
 
 @dp.message(Command("help"))

@@ -1,6 +1,18 @@
 from aiogram import types
 import messages
 
+_kb_on_start = [
+    [
+        types.KeyboardButton(text=messages.KB_START_TEXT),
+    ],
+]
+
+keyboard_start = types.ReplyKeyboardMarkup(
+    keyboard=_kb_on_start,
+    resize_keyboard=True,
+    input_field_placeholder=messages.KB_START_PH
+)
+
 _kb_on_voting = [
     [
         types.KeyboardButton(text="1"),
