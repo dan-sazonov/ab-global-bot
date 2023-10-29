@@ -13,7 +13,7 @@ import config
 import messages
 import db
 from bot import services
-from keyboards import keyboard_start, keyboard_voting
+from keyboards import keyboard_voting
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -45,12 +45,8 @@ async def command_start_handler(message: Message) -> None:
     This handler receives messages with `/start` command
     """
     db.add_user(message.from_user.id, message.date)
-    await message.answer(messages.START, reply_markup=keyboard_start)
+    await message.answer(messages.START)
 
-
-@dp.message(F.text == messages.KB_START_TEXT)
-async def voting_message_handler(message: types.Message):
-    # todo сохраняем в фсм два айдишника
     ans = _new_pair(message)
     await message.answer(ans, reply_markup=keyboard_voting)
 
