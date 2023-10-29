@@ -32,6 +32,18 @@ def _new_pair(message, ids) -> str:
            f'2. {hbold(out[1])}'
 
 
+def _get_usr_ans(message: Message, data: dict) -> int:
+    try:
+        ans = data['prev_id'].split('|')
+    except KeyError:
+        ans = []
+
+    if message.text.isdecimal() and ans:
+        index = int(message.text) - 1
+        return ans[index]
+    return 0
+
+
 @dp.startup()
 async def on_startup():
     db.create_tables()
@@ -47,12 +59,14 @@ async def on_shutdown():
 @dp.message((F.text == "1") | (F.text == "2") | (F.text == "Поехали!"))
 async def polling_handler(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
-    # todo парсить, определить за кого голос и увеличить
+
+    voted_id = _get_usr_ans(message, data)
+    db.update_voted_word(voted_id)
 
     ids = services.get_words_ids()
     await state.update_data(prev_id=f'{ids[0]}|{ids[1]}')
     ans = _new_pair(message, ids)
-    await message.answer(f"{ans}\n{ids}\n{data}", reply_markup=keyboard_voting)
+    await message.answer(ans, reply_markup=keyboard_voting)
 
 
 @dp.message(Command("start"))
