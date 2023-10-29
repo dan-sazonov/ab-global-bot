@@ -39,6 +39,12 @@ async def command_start_handler(message: Message) -> None:
     await message.answer(messages.START, reply_markup=keyboard_start)
 
 
+@dp.message(F.text == messages.KB_START_TEXT)
+async def with_puree(message: types.Message):
+    pass
+    await message.reply("pass", reply_markup=types.ReplyKeyboardRemove())
+
+
 @dp.message(Command("help"))
 async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
