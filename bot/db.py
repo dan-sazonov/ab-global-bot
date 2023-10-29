@@ -30,7 +30,7 @@ def add_user(usr_id: int, usr_date: datetime = None):
         resp_num=0
     )
 
-    query = User.select().where(User.tg_id == usr_id)
+    query = User.select().where(User.tg_id == usr_id)  # change to EAFP way
     with db:
         if not query.exists():
             usr_obj.save()
