@@ -27,7 +27,8 @@ class Answer(StatesGroup):
 
 def _new_pair(ids: tuple[int, int]) -> str:
     out = db.get_words(ids)
-    return f'1. {hbold(out[0])}\n\n' \
+    return f'{messages.VOTING_TITLE}\n' \
+           f'1. {hbold(out[0])}\n\n' \
            f'2. {hbold(out[1])}'
 
 
