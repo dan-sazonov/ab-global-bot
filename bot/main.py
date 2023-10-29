@@ -12,6 +12,7 @@ import config
 import messages
 import db
 from bot import services
+from keyboards import keyboard_start
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -35,7 +36,7 @@ async def command_start_handler(message: Message) -> None:
     This handler receives messages with `/start` command
     """
     db.add_user(message.from_user.id, message.date)
-    await message.answer(messages.START)
+    await message.answer(messages.START, reply_markup=keyboard_start)
 
 
 @dp.message(Command("help"))
