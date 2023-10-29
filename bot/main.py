@@ -83,11 +83,6 @@ async def command_help_handler(message: Message) -> None:
     await message.answer(messages.HELP)
 
 
-@dp.message((F.from_user.id == config.settings.admin_id) & (F.text == "test"))
-async def command_help_handler(message: Message) -> None:
-    await message.answer(_new_pair(message))
-
-
 @dp.message()
 async def unknown_command_handler(message: Message) -> None:
     await message.answer(messages.UNKNOWN)
