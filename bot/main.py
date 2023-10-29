@@ -7,6 +7,7 @@ from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram import F
+from aiogram.utils.markdown import hbold
 
 import config
 import messages
@@ -16,6 +17,14 @@ from keyboards import keyboard_start, keyboard_voting
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
+
+
+def _new_pair(message) -> str:
+    ids = services.get_words_ids()
+    out = db.get_words(ids)
+    db.update_user(message.from_user.id, message.date)
+    return f'1. {hbold(out[0])}\n\n' \
+           f'2. {hbold(out[1])}'
 
 
 @dp.startup()
@@ -40,9 +49,9 @@ async def command_start_handler(message: Message) -> None:
 
 
 @dp.message(F.text == messages.KB_START_TEXT)
-async def with_puree(message: types.Message):
-    pass
-    await message.reply("pass", reply_markup=keyboard_voting)
+async def voting_message_handler(message: types.Message):
+    ans = _new_pair(message)
+    await message.answer(ans, reply_markup=keyboard_voting)
 
 
 @dp.message(Command("help"))
@@ -52,10 +61,7 @@ async def command_help_handler(message: Message) -> None:
 
 @dp.message((F.from_user.id == config.settings.admin_id) & (F.text == "test"))
 async def command_help_handler(message: Message) -> None:
-    ids = services.get_words_ids()
-    out = db.get_words(ids)
-    db.update_user(message.from_user.id, message.date)
-    await message.answer(f'{out[0]}, {out[1]}')
+    await message.answer(_new_pair(message))
 
 
 @dp.message()
