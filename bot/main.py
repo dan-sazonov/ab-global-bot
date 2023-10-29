@@ -7,7 +7,7 @@ from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message
+from aiogram.types import Message, BotCommand, BotCommandScopeDefault
 from aiogram import F
 from aiogram.utils.markdown import hbold
 
@@ -19,6 +19,21 @@ from keyboards import keyboard_voting, keyboard_start
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
+
+
+async def _set_commands(target: Bot):
+    commands = [
+        BotCommand(
+            command='start',
+            description=messages.COMMAND_START
+        ),
+        BotCommand(
+            command='help',
+            description=messages.COMMAND_HELP
+        )
+    ]
+
+    await target.set_my_commands(commands, BotCommandScopeDefault())
 
 
 class Answer(StatesGroup):
@@ -59,6 +74,7 @@ def _update_counters(message: Message, ids: list[int, int]) -> None:
 @dp.startup()
 async def on_startup():
     db.create_tables()
+    await _set_commands(bot)
     await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_START)
 
 
