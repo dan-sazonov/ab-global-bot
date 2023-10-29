@@ -6,7 +6,7 @@ from peewee import fn
 from models import Word
 
 
-def _check_data_file(path: str):
+def _check_data_file(path: str) -> None:
     if not os.path.isfile(path):
         print("Can't read data file with words")
         exit(1)
@@ -52,4 +52,3 @@ def get_words_ids() -> tuple[int, int]:
         id_2 = random.randint(1, max_id)
 
     return id_1, id_2
-

@@ -25,7 +25,7 @@ class Answer(StatesGroup):
     prev_id = State()
 
 
-def _new_pair(message, ids) -> str:
+def _new_pair(message: Message, ids: tuple[int, int]) -> str:
     out = db.get_words(ids)
     db.update_user(message.from_user.id, message.date)
     return f'1. {hbold(out[0])}\n\n' \

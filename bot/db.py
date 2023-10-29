@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from peewee import fn
-
 from models import models_list, db, Word, User, prev_state
 import services
 
@@ -11,7 +9,7 @@ def _add_words() -> None:
         Word.insert_many(services.get_words_objects()).execute()
 
 
-def create_tables():
+def create_tables() -> None:
     has_db = prev_state
 
     with db:
@@ -21,7 +19,7 @@ def create_tables():
         _add_words()
 
 
-def add_user(usr_id: int, usr_date: datetime = None):
+def add_user(usr_id: int, usr_date: datetime = None) -> None:
     usr_date = usr_date if usr_date else datetime.now()
 
     usr_obj = User(
@@ -36,7 +34,7 @@ def add_user(usr_id: int, usr_date: datetime = None):
             usr_obj.save()
 
 
-def update_user(usr_id: int, usr_date: datetime = None):
+def update_user(usr_id: int, usr_date: datetime = None) -> None:
     usr = User.get(User.tg_id == usr_id)
     usr.date_act = usr_date if usr_date else datetime.now()
     usr.resp_num += 1
@@ -53,7 +51,7 @@ def _update_show_num(word_id: int) -> None:
         word.save()
 
 
-def update_voted_word(voted_word_id: int):
+def update_voted_word(voted_word_id: int) -> None:
     if not voted_word_id:
         return
 

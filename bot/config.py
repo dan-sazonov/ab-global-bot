@@ -10,7 +10,7 @@ class Bot:
     admin_id: int
 
 
-def _get_settings():
+def _get_settings() -> Bot:
     load_dotenv()
     return Bot(bot_token=os.getenv("BOT_TOKEN"),
                admin_id=int(os.getenv("ADMIN_ID")))
