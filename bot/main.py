@@ -50,9 +50,17 @@ async def command_start_handler(message: Message) -> None:
 
 @dp.message(F.text == messages.KB_START_TEXT)
 async def voting_message_handler(message: types.Message):
+    # todo сохраняем в фсм два айдишника
     ans = _new_pair(message)
     await message.answer(ans, reply_markup=keyboard_voting)
 
+
+# todo хэндлер для цифровой команды
+#   todo определяем номер цифры
+#   todo голосуем за айдишник под указанным номером
+#   todo сбрасываем фсм
+#   todo показываем новое сообщение
+#   todo сохраняем в фсм их айдишники
 
 @dp.message(Command("help"))
 async def command_help_handler(message: Message) -> None:
