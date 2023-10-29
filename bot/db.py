@@ -54,6 +54,9 @@ def _update_show_num(word_id: int) -> None:
 
 
 def update_voted_word(voted_word_id: int):
+    if not voted_word_id:
+        return
+
     voted_word = Word.get(Word.id == voted_word_id)
     voted_word.vote_num += 1
 
