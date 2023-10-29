@@ -25,9 +25,8 @@ class Answer(StatesGroup):
     prev_id = State()
 
 
-def _new_pair(message: Message, ids: tuple[int, int]) -> str:
+def _new_pair(ids: tuple[int, int]) -> str:
     out = db.get_words(ids)
-    db.update_user(message.from_user.id, message.date)
     return f'1. {hbold(out[0])}\n\n' \
            f'2. {hbold(out[1])}'
 
@@ -47,12 +46,13 @@ def _get_usr_ans(message: Message, ans: list[int]) -> int:
     return 0
 
 
-def _upd_show_nums(ids: list[int, int]) -> None:
+def _update_counters(message: Message, ids: list[int, int]) -> None:
     if not ids:
         return
 
     for i in ids:
         db.update_show_num(i)
+    db.update_user(message.from_user.id, message.date)
 
 
 @dp.startup()
@@ -70,13 +70,13 @@ async def on_shutdown():
 @dp.message((F.text == "1") | (F.text == "2") | (F.text == "Поехали!"))
 async def polling_handler(message: Message, state: FSMContext) -> None:
     data = _parse_state_data(await state.get_data())
-    _upd_show_nums(data)
+    _update_counters(message, data)
     voted_id = _get_usr_ans(message, data)
     db.update_voted_word(voted_id)
 
     ids = services.get_words_ids()
     await state.update_data(prev_id=f'{ids[0]}|{ids[1]}')
-    ans = _new_pair(message, ids)
+    ans = _new_pair(ids)
     await message.answer(ans, reply_markup=keyboard_voting)
 
 
