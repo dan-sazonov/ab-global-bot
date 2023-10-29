@@ -51,7 +51,12 @@ async def command_start_handler(message: Message) -> None:
     await message.answer(ans, reply_markup=keyboard_voting)
 
 
-# todo хэндлер для цифровой команды
+@dp.message((F.text == "1") | (F.text == "2"))
+async def polling_handler(message: Message) -> None:
+    ans = _new_pair(message)
+    await message.answer(ans, reply_markup=keyboard_voting)
+
+
 #   todo определяем номер цифры
 #   todo голосуем за айдишник под указанным номером
 #   todo сбрасываем фсм
