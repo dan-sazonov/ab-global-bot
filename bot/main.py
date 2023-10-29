@@ -5,6 +5,8 @@ import sys
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message
 from aiogram import F
 from aiogram.utils.markdown import hbold
@@ -19,8 +21,11 @@ dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
 
 
-def _new_pair(message) -> str:
-    ids = services.get_words_ids()
+class Answer(StatesGroup):
+    prev_id = State()
+
+
+def _new_pair(message, ids) -> str:
     out = db.get_words(ids)
     db.update_user(message.from_user.id, message.date)
     return f'1. {hbold(out[0])}\n\n' \
@@ -40,16 +45,15 @@ async def on_shutdown():
 
 
 @dp.message((F.text == "1") | (F.text == "2"))
-async def polling_handler(message: Message) -> None:
-    ans = _new_pair(message)
-    await message.answer(ans, reply_markup=keyboard_voting)
+async def polling_handler(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    # todo парсить, определить за кого голос и увеличить
 
+    ids = services.get_words_ids()
+    await state.update_data(prev_id=f'{ids[0]}|{ids[1]}')
+    ans = _new_pair(message, ids)
+    await message.answer(f"{ans}\n{ids}\n{data}", reply_markup=keyboard_voting)
 
-#   todo определяем номер цифры
-#   todo голосуем за айдишник под указанным номером
-#   todo сбрасываем фсм
-#   todo показываем новое сообщение
-#   todo сохраняем в фсм их айдишники
 
 @dp.message(Command("start"))
 async def command_start_handler(message: Message) -> None:
