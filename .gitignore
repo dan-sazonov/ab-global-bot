@@ -160,3 +160,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
+# database and data source files
+*.db
+words.txt
