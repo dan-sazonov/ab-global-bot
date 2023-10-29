@@ -43,7 +43,7 @@ def update_user(usr_id: int, usr_date: datetime = None) -> None:
         usr.save()
 
 
-def _update_show_num(word_id: int) -> None:
+def update_show_num(word_id: int) -> None:
     word = Word.get(Word.id == word_id)
     word.show_num += 1
 
@@ -66,7 +66,6 @@ def get_words(words_ids: tuple[int, int]) -> tuple[str]:
     out = []
 
     for i in words_ids:
-        _update_show_num(i)
         out.append(str(Word.get(Word.id == i).word))
 
     return tuple(out)

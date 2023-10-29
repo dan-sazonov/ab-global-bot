@@ -32,16 +32,27 @@ def _new_pair(message: Message, ids: tuple[int, int]) -> str:
            f'2. {hbold(out[1])}'
 
 
-def _get_usr_ans(message: Message, data: dict) -> int:
+def _parse_state_data(data: dict) -> list[int] | list:
     try:
         ans = data['prev_id'].split('|')
+        return [int(i) for i in ans]
     except KeyError:
-        ans = []
+        return []
 
+
+def _get_usr_ans(message: Message, ans: list[int]) -> int:
     if message.text.isdecimal() and ans:
         index = int(message.text) - 1
         return ans[index]
     return 0
+
+
+def _upd_show_nums(ids: list[int, int]) -> None:
+    if not ids:
+        return
+
+    for i in ids:
+        db.update_show_num(i)
 
 
 @dp.startup()
@@ -58,8 +69,8 @@ async def on_shutdown():
 
 @dp.message((F.text == "1") | (F.text == "2") | (F.text == "Поехали!"))
 async def polling_handler(message: Message, state: FSMContext) -> None:
-    data = await state.get_data()
-
+    data = _parse_state_data(await state.get_data())
+    _upd_show_nums(data)
     voted_id = _get_usr_ans(message, data)
     db.update_voted_word(voted_id)
 
