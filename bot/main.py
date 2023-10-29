@@ -2,19 +2,19 @@ import asyncio
 import logging
 import sys
 
-from aiogram import Bot, Dispatcher, Router, types
+from aiogram import Bot, Dispatcher
+from aiogram import F
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, BotCommand, BotCommandScopeDefault
-from aiogram import F
 from aiogram.utils.markdown import hbold
 
 import config
-import messages
 import db
-from bot import services
+import messages
+import services
 from keyboards import keyboard_voting, keyboard_start
 
 dp = Dispatcher()

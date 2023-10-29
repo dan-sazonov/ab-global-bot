@@ -20,4 +20,3 @@ VOTING_TITLE = "Текст, который будет показан перед 
 
 COMMAND_START = "Описание команды /start"
 COMMAND_HELP = "Описание команды /help"
-

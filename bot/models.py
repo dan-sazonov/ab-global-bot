@@ -1,6 +1,7 @@
 import os
 
 from peewee import Model, PrimaryKeyField, BigIntegerField, DateTimeField, IntegerField, CharField, SqliteDatabase
+
 import config
 
 prev_state = os.path.isfile(config.DB_FILE)

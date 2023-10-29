@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from models import models_list, db, Word, User, prev_state
 import services
+from models import models_list, db, Word, User, prev_state
 
 
 def _add_words() -> None:
