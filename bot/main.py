@@ -12,7 +12,7 @@ import config
 import messages
 import db
 from bot import services
-from keyboards import keyboard_start
+from keyboards import keyboard_start, keyboard_voting
 
 dp = Dispatcher()
 bot = Bot(config.settings.bot_token, parse_mode=ParseMode.HTML)
@@ -42,7 +42,7 @@ async def command_start_handler(message: Message) -> None:
 @dp.message(F.text == messages.KB_START_TEXT)
 async def with_puree(message: types.Message):
     pass
-    await message.reply("pass", reply_markup=types.ReplyKeyboardRemove())
+    await message.reply("pass", reply_markup=keyboard_voting)
 
 
 @dp.message(Command("help"))
