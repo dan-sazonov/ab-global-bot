@@ -67,7 +67,7 @@ async def on_shutdown():
     await bot.send_message(chat_id=config.settings.admin_id, text=messages.ON_STOP)
 
 
-@dp.message((F.text == "1") | (F.text == "2") | (F.text == "Поехали!"))
+@dp.message((F.text == "1") | (F.text == "2") | (F.text == messages.KB_START_TEXT))
 async def polling_handler(message: Message, state: FSMContext) -> None:
     data = _parse_state_data(await state.get_data())
     _update_counters(message, data)

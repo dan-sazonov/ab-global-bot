@@ -1,16 +1,17 @@
 from aiogram.utils.markdown import hbold
 
-START = f"{hbold('Hello!')}"
+START = f"""{hbold('Привет!')}\n
+Это текст команды, которая отобразится на старте"""
 
-HELP = "Sample of /help message"
+HELP = "Текст для команды help"
 
-UNKNOWN = "Unknown command, type /help"
+UNKNOWN = "Текст, который отобразится, если пользователь отправил неожидаемое сообщение"
 
-ON_START = "Бот запущен"
+ON_START = "Бот запущен (будет отправлено админу)"
 
-ON_STOP = "Бот остановлен"
+ON_STOP = "Бот остановлен (будет отправлено админу)"
 
-KB_VOTING_PH = "Выберите один из двух вариантов"
+KB_VOTING_PH = "Плэйсхолдер для выбора ответа"
 
-KB_START_PH = "Нажмите, если готовы начать"
-KB_START_TEXT = "Поехали!"
+KB_START_PH = "Плэйсхолдер для старта бота"
+KB_START_TEXT = "Сообщение для старта бота"
