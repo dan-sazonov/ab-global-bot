@@ -75,3 +75,7 @@ poetry run python main.py
 - `services.py` - вспомогательные функции
 
 ## Автор
+Автор этого репозитория, идеи и кода - [@dan-sazonov](https://github.com/dan-sazonov). <br>
+**Связаться со мной:**<br>
+[✈️ Telegram](https://t.me/dan_sazonov) <br>
+[📧 Email](mailto:p-294803@yandex.com) <br>
