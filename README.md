@@ -2,6 +2,7 @@
 ![OpenSource](https://img.shields.io/badge/Open%20Source-%E2%99%A5-red)
 ![GPL-3.0 license ](https://img.shields.io/github/license/dan-sazonov/ab-global-bot)
 ![Tested on linux, Win10](https://img.shields.io/badge/tested%20on-Linux%20|%20Win10-blue)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 **Телеграм-бот для проведения масштабных A/B тестирований названий или других текстовых данных** 
 
@@ -60,5 +61,7 @@ poetry run python main.py
 - [ ] Сохранять в БД ссылку на аккаунт пользователей
 - [ ] Рассылать раз в nный промежуток времени пользователям сообщение с приглашением продолжить опрос
 - [ ] Сообщать пользователю, сколько раз он уже проголосовал
+
+Если вы хотите внести свой вклад, откройте ишью, в котором опишите, над чем вы работаете и ваше видение реализации, сделайте форк репозитория, и после завершения работы предложите пулл-реквест в ветку `dev` с названием как у ишью. Для именования коммитов используйте английский язык и [Conventional Commits](https://github.com/conventional-commits/conventionalcommits.org).
 
 ## Автор
