@@ -4,7 +4,7 @@ from peewee import Model, PrimaryKeyField, BigIntegerField, DateTimeField, Integ
 
 import config
 
-prev_state = os.path.isfile(config.DB_FILE)
+prev_state = os.path.isfile(config.DB_FILE)  # флаг, существует ли файл бд. Его тащим в db.py
 db = SqliteDatabase(config.DB_FILE)
 
 
@@ -35,4 +35,4 @@ class Word(BaseModel):
         db_table = 'words'
 
 
-models_list = [User, Word]
+models_list = [User, Word]  # для удобства импорта пихаем модели в один лист
